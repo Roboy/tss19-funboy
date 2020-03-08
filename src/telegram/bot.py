@@ -6,6 +6,7 @@
 import logging
 import random
 import re
+import os
 
 from telegram import ParseMode
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, ConversationHandler
@@ -50,12 +51,11 @@ def joke(update, context):
     query = update.callback_query
     bot = context.bot
 
-    # TODO: Attach an RDate / Project as a query data?
     selection = query.data
     logger.info(f"Query data: {selection}")
     if re.match(r'^j', selection):
         text = f"{context.user_data['joke']} | {context.user_data['category']} | {selection[1:]}\n"
-        with open(f"./data/{context.user_data['this_user']}.txt") as f:
+        with open(f"{os.path.dirname(__file__)}/data/{context.user_data['this_user']}.txt") as f:
             f.write(text)
             context.user_data['joke'] = ""
             context.user_data['category'] = ""
