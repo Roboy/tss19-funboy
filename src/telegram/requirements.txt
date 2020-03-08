@@ -1,0 +1,5 @@
+python-telegram-bot
+tensorflow-gpu==1.13.1
+regex==2017.4.5
+tqdm==4.31.1
+toposort==1.5
