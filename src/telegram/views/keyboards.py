@@ -23,11 +23,11 @@ def joke_markup():
     # The keyboard is a list of button rows, where each row is in turn
     # a list (hence `[[...]]`).
     keyboard = [
-        [InlineKeyboardButton("1", callback_data=str(ONE)),
-         InlineKeyboardButton("2", callback_data=str(TWO)),
-         InlineKeyboardButton("3", callback_data=str(THREE)),
-         InlineKeyboardButton("4", callback_data=str(FOUR)),
-         InlineKeyboardButton("5", callback_data=str(FIVE))],
-        [InlineKeyboardButton("Offensive", callback_data=str(SIX))]
+        [InlineKeyboardButton("1", callback_data="j" + str(ONE)),
+         InlineKeyboardButton("2", callback_data="j" + str(TWO)),
+         InlineKeyboardButton("3", callback_data="j" + str(THREE)),
+         InlineKeyboardButton("4", callback_data="j" + str(FOUR)),
+         InlineKeyboardButton("5", callback_data="j" + str(FIVE))],
+        [InlineKeyboardButton("Offensive", callback_data="j" + str(SIX))]
     ]
     return InlineKeyboardMarkup(keyboard)
