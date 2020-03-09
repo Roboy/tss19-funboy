@@ -18,7 +18,7 @@ MODEL='774A'
 SEED=None
 NSAMPLES=1
 BATCH=1
-LENGTH=35
+LENGTH=40
 TEMPERATURE=0.9
 TOP_K=40
 TOP_P=0.9
@@ -51,14 +51,14 @@ class DeepComedian(Comedian):
             "dadjokes": f"<|dadjokes|>",
             "other": f"<|other|>"
         }
-        self.nsamples = 35
+        self.nsamples = 40
         self.batch_size = 1
         self.path = path
         self.model_name = model_name
         self.encoder = get_encoder(model_name)
         self.session, self.output, self.context = self.interactive_model()
 
-    def interactive_model(self, seed=None, nsamples=35, length=1, temperature=1, top_k=40, top_p=0.9):
+    def interactive_model(self, seed=None, nsamples=40, length=1, temperature=1, top_k=40, top_p=0.9):
         """
         Interactively run the model
         :seed=None : Integer seed for random number generators, fix seed to reproduce

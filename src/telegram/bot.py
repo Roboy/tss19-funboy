@@ -55,7 +55,7 @@ def joke(update, context):
     logger.info(f"Query data: {selection}")
     if re.match(r'^j', selection):
         text = f"{context.user_data['joke']} | {context.user_data['category']} | {selection[1:]}\n"
-        with open(f"{os.path.dirname(__file__)}/data/{context.user_data['this_user']}.txt") as f:
+        with open(f"./data/{context.user_data['this_user']}.txt", "a+") as f:
             f.write(text)
             context.user_data['joke'] = ""
             context.user_data['category'] = ""
