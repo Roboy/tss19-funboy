@@ -18,8 +18,8 @@ MODEL='774A'
 SEED=None
 NSAMPLES=1
 BATCH=1
-LENGTH=40
-TEMPERATURE=0.9
+LENGTH=100
+TEMPERATURE=1.0
 TOP_K=40
 TOP_P=0.9
 PATH=f'{os.path.dirname(__file__)}/models'
@@ -51,14 +51,15 @@ class DeepComedian(Comedian):
             "dadjokes": f"<|dadjokes|>",
             "other": f"<|other|>"
         }
-        self.nsamples = 40
+        self.nsamples = 1
+        self.length = LENGTH
         self.batch_size = 1
         self.path = path
         self.model_name = model_name
         self.encoder = get_encoder(model_name)
         self.session, self.output, self.context = self.interactive_model()
 
-    def interactive_model(self, seed=None, nsamples=40, length=1, temperature=1, top_k=40, top_p=0.9):
+    def interactive_model(self, seed=None, nsamples=1, length=LENGTH, temperature=1, top_k=40, top_p=0.9):
         """
         Interactively run the model
         :seed=None : Integer seed for random number generators, fix seed to reproduce
@@ -112,29 +113,29 @@ class DeepComedian(Comedian):
 
         line = self._get_tokens(type, utterance)
 
-        result = ""
         context_tokens = self.encoder.encode(line)
-        l = len(context_tokens)
+        generated = 0
         for _ in range(self.nsamples // self.batch_size):
-            out = self.session.run(self.output,
-                                   feed_dict={
-                                       self.context: [context_tokens for _ in range(self.batch_size)]
-                                   })
-            context_tokens = out[0]
-        for token in out[:, l:]:
-            result += self.encoder.decode(token)
-        result = self._clean_result(result)
+            out = self.session.run(self.output, feed_dict={
+                self.context: [context_tokens for _ in range(self.batch_size)]
+            })[:, len(context_tokens):]
+            for i in range(self.batch_size):
+                generated += 1
+                text = self.encoder.decode(out[i])
+
+        result = self._clean_result(text)
 
         logger.info(f"{self.__class__.__name__} | Result: {result} | Type: {type}")
         return result
 
     def _get_tokens(self, type: str, utterance: str = None) -> str:
-        type = f"{self.types.get(type, '<|other|>')}"
         #s = f"<|short|> <|nazi|>"
-        if utterance is None:
-            s = f"<|short|> {type}"
+        if type in ["momma", "dadjokes"]:
+            s = f"<|short|>"
         else:
-            s = f"<|medium|> {type}" if random.random() < 0.4 else f"<|short|> {type}"
+            s = f"<|medium|>" if random.random() < 0.5 else f"<|short|>"
+        s = f"{s} <|{type}|>"
+        if utterance is not None:
             s = f"{s}{utterance}"
         logger.info(f"Tokens: {s}")
         return s
