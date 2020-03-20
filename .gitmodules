@@ -1,3 +1,0 @@
-[submodule "src/gpt-2"]
-	path = src/gpt-2
-	url = https://github.com/openai/gpt-2
