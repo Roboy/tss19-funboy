@@ -1,4 +1,4 @@
-## GPT-2 TLH Server
+# GPT-2 TLH Server
 
 GPT-2 TLH (Transfer Learning for Humour) is a pre-trained GPT-2-L model finetuned on humour data
 

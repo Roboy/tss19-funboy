@@ -1,4 +1,4 @@
-## Command Line Interface to access GPT-2 TLH Server
+# Command Line Interface to access GPT-2 TLH Server
 
 This command line 
 
