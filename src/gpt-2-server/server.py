@@ -24,6 +24,7 @@ class Server(BaseHTTPRequestHandler):
     def do_GET(self):
         self._set_headers()
         query_components = parse_qs(urlparse(self.path).query)
+        print(query_components)
         for key in query_components:
             query_components[key] = ''.join(query_components[key])
         types = " ".join([f"<|{x}|>" for x in query_components.pop("types").split(",")])
