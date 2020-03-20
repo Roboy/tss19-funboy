@@ -22,4 +22,4 @@ To start the server for joke generation, execute:
 python -c "import server; server.run()"
 
 ```
-By default, the server uses port 5050 on localhost which may cauce a port conflict with Yahoo Messenger.
+By default, the server uses port 5050 on localhost which may cause a port conflict with Yahoo Messenger.
