@@ -1,5 +1,5 @@
 python-telegram-bot
-tensorflow-gpu==1.15.0
+tensorflow-gpu==1.15.2
 regex==2017.4.5
 tqdm==4.31.1
 toposort==1.5
