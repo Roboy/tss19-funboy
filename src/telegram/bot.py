@@ -11,9 +11,9 @@ import os
 from telegram import ParseMode
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, ConversationHandler
 
-from config import MENU_OPTIONS, JOKE, CATEGORIES
+from config import MENU_OPTIONS, JOKE, CATEGORIES, SIZES
 
-from deepcomedian.deep_comedian import DeepComedian
+from controllers.joker import Joker
 from views.keyboards import start_markup, joke_markup
 from views.messages import start_message
 
@@ -25,7 +25,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
-deepcomedian = DeepComedian()
+joker = Joker()
 
 
 def start(update, context):
@@ -60,9 +60,11 @@ def joke(update, context):
             context.user_data['joke'] = ""
             context.user_data['category'] = ""
 
-    category = random.choice(CATEGORIES)
-    text = deepcomedian.render(type=category)
-    context.user_data["category"] = category
+    content = random.choice(CATEGORIES)
+    size = SIZES[0]
+
+    text = joker.render(types=[size, content])
+    context.user_data["category"] = [size, content]
     context.user_data["joke"] = text
 
     bot.edit_message_text(
