@@ -26,21 +26,12 @@ def interact():
             print('Prompt should not be empty!')
             raw_text = input("Model prompt >>> ")
 
-        while not server_up(address):
-            global server_started
-            if server_started:
-                # don't resign if server started
-                logger.info(
-                    "\n--------"
-                    "\nThe server is still starting up. It will not react to this input."
-                    "\n--------")
-                return
-            else:
-                logger.error(
-                    "\n--------"
-                    "\nThe server does not seem to be running!"
-                    "\n--------")
-                break
+        if not server_up(address):
+            logger.error(
+                "\n--------"
+                "\nThe server does not seem to be running!"
+                "\n--------")
+            break
 
         logger.info(raw_text)
         types = re.findall('\|(.+?)\|', raw_text)

@@ -3,10 +3,10 @@
 """Inline keyboard bot with multiple CallbackQueryHandlers.
 
 """
+import hashlib
 import logging
 import random
 import re
-import os
 
 from telegram import ParseMode
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, ConversationHandler
@@ -32,7 +32,7 @@ def start(update, context):
     """Send message on `/start`."""
     # Get user that sent /start and log his name
     user = update.message.from_user['id']
-    context.user_data["this_user"] = user
+    context.user_data["this_user"] = hashlib.sha224(user).hexdigest()
 
     logger.info("User %s started the conversation.", user)
 
