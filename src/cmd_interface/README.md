@@ -1,8 +1,8 @@
 # Command Line Interface to access GPT-2 TLH Server
 
-This command line 
+This script provides a command line interface to the GPT-2 TLH server. 
 
-### Installation
+## Installation
 Install the necessary dependencies via pip:
  
 ```bash
@@ -11,7 +11,7 @@ pip install -r requirements.txt
 
 ```
 
-### Running
+## Running
 First, you need to start GPT-2 TLH Server, then run:
 
 ```bash
@@ -28,7 +28,7 @@ Model prompt >>>
 ```
 You can start typing.
 
-### Trying
+## Trying
 Try:
 
 ```bash
