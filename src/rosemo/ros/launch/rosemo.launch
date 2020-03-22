@@ -1,0 +1,4 @@
+<launch>
+   <node name="rosemo_video" pkg="rosemo" type="rosemo_video.py" respawn="true" output="screen" />
+   <node name="rosemo_audio" pkg="rosemo" type="rosemo_audio.py" respawn="true" output="screen" />
+</launch>

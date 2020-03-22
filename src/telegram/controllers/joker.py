@@ -9,7 +9,6 @@ CONFIG = {
 
 
 class Joker:
-    server_started = False
     address = f"{CONFIG['SERVER_ADDRESS']}:{CONFIG['SERVER_PORT']}"
 
     def render(self, types):
