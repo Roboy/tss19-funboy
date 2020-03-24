@@ -5,3 +5,7 @@ __pycache__
 models/
 src/dataset/scrapped/posts_jokes.json
 src/dataset/data/dataset_clean.txt
+data
+sdata
+db
+
