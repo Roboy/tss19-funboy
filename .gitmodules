@@ -1,0 +1,4 @@
+[submodule "src/ravestate"]
+	path = src/ravestate
+	url = https://github.com/Roboy/ravestate.git
+	branch = funboy
