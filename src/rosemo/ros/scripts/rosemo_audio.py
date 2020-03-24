@@ -71,7 +71,7 @@ class RosemoAudioServer:
             return None
 
     def run(self):
-        rospy.init_node('rosemo')
+        rospy.init_node('rosemo_audio')
         rate = rospy.Rate(1)  # 1hz
         print("Ready: Rosemo Audio Server")
         while not rospy.is_shutdown():

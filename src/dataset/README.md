@@ -2,7 +2,7 @@
 
 This repository uses [pushshift.io](https://pushshift.io/) to collect data. Learn more about [the pushshift project](https://arxiv.org/abs/2001.08435)!  
 
-This dataset contains 665 781 jokes from Reddit, wocka and stupidstuff. You can download it [here]().
+This dataset contains 665 781 jokes from Reddit, wocka and stupidstuff. You can download it [here](https://drive.google.com/file/d/1k1MAgDhKZzFUGZ7G6WgAD6Ii2A9-G_Fj/view?usp=sharing).
 
 ## Collecting data
 Install the necessary dependencies via pip:

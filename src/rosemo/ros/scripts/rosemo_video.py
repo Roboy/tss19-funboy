@@ -75,7 +75,7 @@ class RosemoVideoServer:
             return None
 
     def run(self):
-        rospy.init_node('rosemo')
+        rospy.init_node('rosemo_video')
         rate = rospy.Rate(2)  # 2hz
         print("Ready: Rosemo Video Server")
         while not rospy.is_shutdown():

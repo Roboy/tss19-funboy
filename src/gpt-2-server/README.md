@@ -1,8 +1,9 @@
 # GPT-2 TLH Server
 
-GPT-2 TLH (Transfer Learning for Humour) is a pre-trained GPT-2-L model finetuned on humour data
+GPT-2 TLH (Transfer Learning for Humour) is a pre-trained GPT-2-L model finetuned on humour data.
 
-The server runs this model for inference over http. It requires Python 3.6 and Tensorflow-gpu 1.15.2.
+The server runs this model for inference over http. It requires Python 3.6 and Tensorflow-gpu 1.15.2. 
+You can download the GPT-2 TLH model [here](https://drive.google.com/open?id=17Hfi-djaht8VKn00e33Z0BgJOE46d2RL).
 
 ### Installation
 Install the necessary dependencies via pip:
