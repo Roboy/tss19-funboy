@@ -32,7 +32,7 @@ def start(update, context):
     """Send message on `/start`."""
     # Get user that sent /start and log his name
     user = update.message.from_user['id']
-    context.user_data["this_user"] = hashlib.sha224(user).hexdigest()
+    context.user_data["this_user"] = hashlib.sha224(str(user).encode('utf-8')).hexdigest()
 
     logger.info("User %s started the conversation.", user)
 
