@@ -1,0 +1,71 @@
+% !TeX root = ../main.tex
+% Add the above to each chapter to make compiling the PDF easier in some editors.
+
+\chapter{Challenges and Future}\label{chapter:challenges}
+
+\section{Current Challenges}
+
+In this section, we will discuss the challenges that we encountered while implementing the project and conducting the experiment. These following challenges mainly arose from how used data looked like and as well as the GPT-2 TLH model's performance.
+
+\subsection{Joke Types Identification}
+
+The first problem we encountered with the dataset was the researcher bias. Since we used plain-text-based class tokens such as <|chicken|> or <|cookie|>, the choice of exact tokens suffers from the bias exhibited by the researchers. This situation means that if the tokens were chosen purely according to the desire of the responsible regardless, for example, the token frequency distributions in the dataset, we could end up with a very weak prior for the classes. At the same time, a potentially infinite amount of semantically-dependent combinations between tokens doesn't allow us to solve this problem by a purely analytical approach.
+
+Furthermore, tokens sub-string matching works only on a subset of jokes. For example, it works very well on such riddling jokes as:
+\begin{itemize}
+    \item "Why did the chicken cross the road?"
+\end{itemize}
+because all of these jokes have the same subject and same structure.
+At the same time, the quality of generating other structurally invariant jokes such as:
+\begin{itemize}
+    \item "I like my \( X\) as I like my \( Y\)" 
+\end{itemize}
+suffers because these jokes can feature different objects and might get split into several classes. These erroneous splits can prevent the Language Model from properly learning the generation task.
+
+However, we propose to solve this problem by allowing many people to vote for the class labels simultaneously. In other words, the solution could be to use an online crowd-sourcing of the label data. To enable such opportunity, we can set up a web-page which offers users to read utterances one by one sampled from our data. Then, the users can label the joke samples according to the semantic information extracted from them. For sampling the data points, we propose to use a bootstrapping approach on the original dataset.
+
+\subsection{Dataset Cleanliness}\label{subsection:datac}
+
+During the data pre-processing step, we identified another problem. Unfortunately, online data had many impurities, such as:    
+\begin{itemize}
+    \item disfluencies, when the line of text is interrupted by extra spaces or other unrelated characters;
+    \item noise, when online users posted incomprehensible data; non-jokes, simply humourless texts unwanted in our data;
+    \item damaged data when the data was not fully present after fetching;
+    \item empty samples, when the fetched data turned out to be empty.
+\end{itemize}
+
+For this problem, we also offer to use online crowd-sourcing similar to the previous proposal. This time, the users will have first to decide if the sample belongs to jokes or non-jokes. The non-joke data is discarded after the critical number of hits. If the joke samples contain impurities, the users can edit them and save the updated variant.
+
+\subsection{Language Model Performance}
+
+We discovered four noticeable problems regarding the Language Model performance. The first issue was that the model learned offensive jokes better and faster than non-offensive ones. The main hypothesis is that the offensive jokes provide a stronger signal in data due to more specific tokens. Moreover, the tokens may exhibit higher co-occurrence values in offensive jokes. This effect was observable on the jokes of <|momma|> type such as:
+\begin{itemize}
+    \item "Yo, momma is so X, she Y"
+\end{itemize}
+
+The next issue happened due to the dataset not being fully clean. The data impurities caused the model to learn noisy tokens which were often present across various classes such as URL word-pieces, subreddit identifiers, usernames, unique characters. We can solve this problem only by gradually making our data cleaner (see Subsection~\ref{subsection:datac}). The generation results sometimes contained so much nonsensical phrasing and disfluencies that the interlocutors were not capable of understanding the responses.
+        
+The last complication was not a problem of the Language Model in essence. However, due to the substantial delay between the input and the generated response, the participants of the experiment could not fully engage in the verbal interaction. The system experienced critical delays (five seconds or more) already from the response length of 50 tokens which is not enough even for the smallest length type <|short|>.
+
+
+\section{Future Research}
+
+In this section, we will offer a possible future approach which may help to advance the current implementation of Funboy further. We will focus on two main topics: emotion recognition and humour generation.
+
+\subsection{Visual Cues Detection Model}
+To recognise facial emotions more decidedly, Roboy can utilise some visual cues detection model which has to be more specific and sensitive than conventional emotion classification model, because we are interested in asymmetric quantitative prediction in a humour perception domain. For example, our current emotion classifier can infer whether a person is calm, angry or happy. 
+
+To train such cues detection model, we will need to collect more image data on how interlocutors interact with Roboy. In the following step, we could compare the timestamps of the recordings with the timestamps of the humorous and non-humorous responses. In this way, we can pinpoint the intervals coinciding with a specific humorous situation. Afterwards, we will manually determine the data points containing useful information. These frames will act as data points for our visual cues dataset, under the assumption that they may provide behavioural patterns indicating a reaction to humorous input. We could use this dataset to apply Transfer Learning technique to achieve better recognition accuracy already. It is important to note that due to very narrow domain (interacting with only one particular robot) the resulting model will be biased towards Roboy interacting with other people and might show worse results when used with other robots.
+
+Furthermore, for the model, we could introduce four possible classification scenarios while interacting with an interlocutor: the interlocutor is amused given humorous interaction \(VC(A|H)\); the interlocutor is amused given no humorous interaction \(VC(A|NH)\); the interlocutor is not amused given humorous input \(VC(NA|H)\); the interlocutor is not amused given lack of humorous interaction \(VC(NA|NH)\). 
+
+The first situation denotes the most crucial evaluation for social robots since it allows gauging interlocutors’ reactions to the specific style of humour being employed at the moment. However, at the same time, it poses a challenge to the classification task, since it requires not only a qualitative result but also a quantitative assessment according to a yet-to-be-defined scale of amusement (positive reward values). The resulting score is then added to the specific style of humour value in the interlocutor’s profile. The second scenario is almost equally important because it provides a regularisation estimation considering the following problem: a person who is currently engaging in a conversation with a robot might be affected by the novelty of such interaction, which might lead to a sustained state of amusement regardless of humorous undertakings. Thus, the model will have to subtract \(VC(A|NH)\) from \(VC(A|H)\), effectively regularising the prediction. In the third case, the robot assumes that the person is not interested in this type of joke. Thus, it has to assign a negative reward to this style of humour. However, the negative reward is a constant negative value, since the model cannot predict whether the interlocutor did not like the joke, or the delivery was substandard. Therefore, it might penalise the joke too harshly in case of a quantitative evaluation. The latter situation is trivial; it does not provide any information gain since it is the default state in any arbitrary verbal interaction.
+
+
+\subsection{Better Language Model}
+
+While testing of the implementation and during the experiment, we have observed many "almost funny" generated responses. It is evident that the GPT-2 TLH model grasped the concept behind some joke types. However, there was not enough information to learn about how successfully the model interpreted the joke's category. To improve this situation, we propose to utilise Reinforcement Learning on top of the current Language Model.
+
+Reinforcement Learning is a learning technique that concentrates on learning the actions needed to maximise the reward instead of finding the association between two sets of data. In this way, RL is different from both supervised and unsupervised approaches. A learning agent has to try different variations of actions to improve the amount of reward gained on the next action~\parencite{rele}. Therefore, we find this idea appealing to adjust the weights of our Language Model. 
+        
+However, we would like to combine the Reinforcement Learning process with our developed telegram bot (see Chapter~\ref{chapter:implementation}) so that many more people can rate the jokes and reward or punish the model respectively directly utilising the human reasoning in the task. This approach also will not require to interact with the whole experiment setup simplifying the task. 
