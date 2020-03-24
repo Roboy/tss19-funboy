@@ -56,8 +56,7 @@ class GPTWrapper:
         :top_p=0.0 : Float value controlling diversity. Implements nucleus sampling,
          overriding top_k if set to a value > 0. A good setting is 0.9.
         """
-        batch_size = 1
-        assert self.nsamples % batch_size == 0
+        assert self.nsamples % self.batch_size == 0
 
         hparams = default_hparams()
         with open(os.path.join(self.path, self.model_name, 'hparams.json')) as f:
@@ -69,14 +68,14 @@ class GPTWrapper:
             raise ValueError("Can't get samples longer than window size: %s" % hparams.n_ctx)
 
         sess = tf.InteractiveSession()
-        context = tf.placeholder(tf.int32, [batch_size, None])
+        context = tf.placeholder(tf.int32, [self.batch_size, None])
         np.random.seed(seed)
         tf.set_random_seed(seed)
         output = sample_sequence(
             hparams=hparams,
             length=length,
             context=context,
-            batch_size=batch_size,
+            batch_size=self.batch_size,
             temperature=temperature, top_k=top_k, top_p=top_p
         )
 
@@ -90,20 +89,18 @@ class GPTWrapper:
 
         logger.info(f"{self.__class__.__name__} | Input: {tokens} ")
 
-        line = tokens
-
-        result = ""
-        context_tokens = self.encoder.encode(line)
-        l = len(context_tokens)
+        context_tokens = self.encoder.encode(tokens)
+        generated = 0
         for _ in range(self.nsamples // self.batch_size):
             out = self.session.run(self.output,
                                    feed_dict={
                                        self.context: [context_tokens for _ in range(self.batch_size)]
-                                   })
-            context_tokens = out[0]
-        for token in out[:, l:]:
-            result += self.encoder.decode(token)
-        result = self._clean_result(result)
+                                   })[:, len(context_tokens):]
+            for i in range(self.batch_size):
+                generated += 1
+                text = self.encoder.decode(out[i])
+
+        result = self._clean_result(text)
 
         logger.info(f"{self.__class__.__name__} | Result: {result} ")
         return result
