@@ -2,7 +2,7 @@
 
 This repository provides all main and supplementary files and source code for the master thesis *Funboy: Deducing, 
 Assessing, Rendering, Validating and Attuning Humor in a Natural Language Dialogue for Human-Robot Interaction*
-carried out at [Roboy](https://roboy.org/) and [Technical University of Munich](https://www.tum.de/) in 
+carried out at [Roboy](https://roboy.org/) and [the Technical University of Munich](https://www.tum.de/) in 
 Summer Semester 2019 / Winter Semester 2019-2020.
 
 
