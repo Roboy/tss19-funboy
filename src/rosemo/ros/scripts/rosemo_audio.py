@@ -63,6 +63,7 @@ class RosemoAudioServer:
 
         if self.offset > self.duration + 5:
             emotions, timestamp = self.model.predict_emotion_from_file(rec, offset=self.offset, duration=self.duration)
+            self.model = SpeechEmotionRecognition(model_path)
             # Calculate emotion distribution
             emotion_dist = [int(100 * emotions.count(label) / len(emotions)) for label in self.labels]
             return emotion_dist
