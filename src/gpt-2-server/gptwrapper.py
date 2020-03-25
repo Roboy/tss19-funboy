@@ -86,6 +86,7 @@ class GPTWrapper:
         return sess, output, context
 
     def render(self, tokens):
+        print(tokens)
 
         logger.info(f"{self.__class__.__name__} | Input: {tokens} ")
 

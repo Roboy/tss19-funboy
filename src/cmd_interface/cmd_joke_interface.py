@@ -34,7 +34,7 @@ def interact():
             break
 
         logger.info(raw_text)
-        types = re.findall('\|(.+?)\|', raw_text)
+        types = re.findall('\<\|(.+?)\|\>', raw_text)
         if len(types) == 0:
             types = ['short']
         types = ", ".join(types)

@@ -19,7 +19,7 @@ class Joker:
                 "\n--------")
             return ""
 
-        types = ", ".join(types)
+        types = ",".join(types)
         params = {
             'types': types,
             'utterance': " "
