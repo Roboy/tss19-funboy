@@ -55,13 +55,14 @@ def joke(update, context):
     logger.info(f"Query data: {selection}")
     if re.match(r'^j', selection):
         text = f"{context.user_data['joke']} | {context.user_data['category']} | {selection[1:]}\n"
-        with open(f"./data/{context.user_data['this_user']}.txt", "a+") as f:
-            f.write(text)
-            context.user_data['joke'] = ""
-            context.user_data['category'] = ""
+        f = open(f"./data/{context.user_data['this_user']}.txt", "a+")
+        f.write(text)
+        f.close()
+        context.user_data['joke'] = ""
+        context.user_data['category'] = ""
 
     content = random.choice(CATEGORIES)
-    size = SIZES[0]
+    size = random.choice([SIZES[0], SIZES[1]])
 
     text = joker.render(types=[size, content])
     context.user_data["category"] = [size, content]
