@@ -31,6 +31,8 @@ class Server(BaseHTTPRequestHandler):
         utterance = query_components.pop("utterance")
         if utterance != " ":
             response = responder.render(f"{types}{utterance}")
+        else:
+            response = responder.render(types)
         json_payload = json.dumps({"response": response})
         self.wfile.write(bytes(json_payload, encoding="utf-8"))
 
