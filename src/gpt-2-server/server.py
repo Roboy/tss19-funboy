@@ -29,7 +29,8 @@ class Server(BaseHTTPRequestHandler):
             query_components[key] = ''.join(query_components[key])
         types = " ".join([f"<|{x}|>" for x in query_components.pop("types").split(",")])
         utterance = query_components.pop("utterance")
-        response = responder.render(f"{types}{utterance}")
+        if utterance != " ":
+            response = responder.render(f"{types}{utterance}")
         json_payload = json.dumps({"response": response})
         self.wfile.write(bytes(json_payload, encoding="utf-8"))
 
