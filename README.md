@@ -46,8 +46,6 @@ emotion recognition feedback given positive or negative emotions experienced by
 the interlocutor.
 5. *At* stands for "attune" and is a state that adjusts the humour types scores of the
 given interlocutor.
-In this section, we clarify the roles and functioning of each module inside the dialogue
-system. Figure 3.1 shows a general structure of the proposed system.
 
 The DARVAH loop is illustrated in the following Figure:
 
