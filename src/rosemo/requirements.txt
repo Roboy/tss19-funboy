@@ -2,7 +2,7 @@ graphviz
 -e git://github.com/Lasagne/Lasagne.git#egg=Lasagne
 Pillow==6.2.2
 opencv-python
-tensorflow==1.15.2
+tensorflow==2.5.1
 scipy<=1.2.1
 pyaudio
 librosa
